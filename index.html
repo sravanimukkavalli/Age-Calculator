@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link src="./index.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous"/>
+</head>
+<body>
+    <div class="bg-info p-5 d-flex flex-column justify-content-center">
+        <form class="card-container" id="myForm">
+            <div class="pb-3">
+                <label class="label-style" for="day">DAY</label>
+                <input type="number" id="day" min="1" max="31" class="form-control w-25" placeholder="Enter Date" required/>
+            </div>
+            <div class="d-flex flex-column pb-3">
+                <label class="label-style" for="month">MONTH</label>
+                <input type="number" id="month" min="1" max="12" class="form-control w-25" placeholder="Enter Month" required/>
+            </div>
+            <div class="d-flex flex-column">
+                <label class="label-style" for="year">YEAR</label>
+                <input type="number" id="year" class="form-control w-25" placeholder="Enter Year" required />
+            </div>
+            <button type="submit" class="btn btn-success mt-4">Calculate</button>
+        </form>
+        <div id="result" class="text-primary p-4 result-style">
+            
+        </div>
+    </div>
+    <script type="module">
+        let data = {day,month,year}
+        const resultContainer = document.getElementById('result')
+        function calculateAge(data){
+            let currentDate=new Date()
+            console.log(currentDate)
+            const userYear = parseInt(data.year);
+            const userMonth = parseInt(data.month) - 1;
+            const userDate = parseInt(data.day)
+            const userEnteredDate = new Date(userYear,userMonth,userDate);
+            const diff = parseInt((currentDate.getTime() - userEnteredDate.getTime()) / (1000 * 3600 * 24));
+            console.log(diff)
+            const years = parseInt(diff / 365);
+            const remDays = parseInt(diff % 365);
+            const months = parseInt(remDays / 30);
+            const days = parseInt(remDays % 30);
+            console.log(`${years} Years-${months} Months-${days} Days`)
+            resultContainer.textContent = `Years-${years}   Months-${months}    Days-${days} `;
+        }
+
+        
+        const formEle = document.getElementById('myForm');
+        formEle.addEventListener('submit',function(event){
+            event.preventDefault();
+            console.log(data)
+            calculateAge(data);
+        })
+        const dayEle = document.getElementById('day');
+        dayEle.addEventListener('change',function(event){
+            data.day = event.target.value
+        })
+        const monthEle = document.getElementById('month');
+        monthEle.addEventListener('change',function(event){
+            data.month = event.target.value
+        })
+        const yearEle = document.getElementById('year');
+        yearEle.addEventListener('change',function(event){
+            data.year = event.target.value
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
